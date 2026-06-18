@@ -1228,32 +1228,304 @@
     }
 
     /* ============================================================
-       CHAT WIDGET
+       GALINA CHATBOT
        ============================================================ */
-    #chat-widget {
+    #galina-toggle {
       position: fixed;
-      bottom: var(--space-6);
-      right: var(--space-6);
-      width: 60px;
-      height: 60px;
+      bottom: 24px;
+      right: 24px;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 4px 16px rgba(212,114,42,0.35);
-      display: grid;
-      place-items: center;
+      background: #1a3a2a;
+      box-shadow: 0 4px 20px rgba(26,58,42,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      z-index: 95;
-      transition: transform var(--dur-fast) var(--ease-out-quart),
-                  box-shadow var(--dur-fast) var(--ease-out-quart);
+      z-index: 9998;
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    #chat-widget:hover {
+    #galina-toggle:hover {
       transform: scale(1.08);
-      box-shadow: 0 6px 24px rgba(212,114,42,0.45);
+      box-shadow: 0 6px 28px rgba(26,58,42,0.5);
     }
-    #chat-widget svg { width: 26px; height: 26px; color: white; }
+    #galina-toggle .galina-avatar-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #c8a45c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 1;
+      color: #1a3a2a;
+      font-weight: 700;
+    }
+    #galina-toggle .galina-close-icon {
+      display: none;
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    #galina-toggle.galina-open .galina-avatar-btn { display: none; }
+    #galina-toggle.galina-open .galina-close-icon { display: flex; }
 
+    #galina-window {
+      position: fixed;
+      bottom: 100px;
+      right: 24px;
+      width: 380px;
+      height: 520px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+      z-index: 9999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    #galina-window.galina-visible {
+      display: flex;
+    }
+    #galina-window.galina-shown {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .galina-header {
+      background: #1a3a2a;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .galina-header-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #c8a45c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .galina-header-avatar svg {
+      width: 24px;
+      height: 24px;
+      fill: #1a3a2a;
+    }
+    .galina-header-info {
+      flex: 1;
+    }
+    .galina-header-name {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 15px;
+      font-family: var(--font-display), system-ui, sans-serif;
+      margin: 0;
+    }
+    .galina-header-status {
+      color: #a0b8a8;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 2px;
+    }
+    .galina-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4caf50;
+      display: inline-block;
+    }
+    .galina-header-close {
+      background: none;
+      border: none;
+      color: #a0b8a8;
+      font-size: 22px;
+      cursor: pointer;
+      padding: 4px;
+      line-height: 1;
+      transition: color 0.15s ease;
+    }
+    .galina-header-close:hover {
+      color: #ffffff;
+    }
+
+    .galina-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #f7f6f3;
+    }
+    .galina-messages::-webkit-scrollbar { width: 5px; }
+    .galina-messages::-webkit-scrollbar-track { background: transparent; }
+    .galina-messages::-webkit-scrollbar-thumb { background: #ccc2b5; border-radius: 3px; }
+
+    .galina-msg {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 13.5px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      white-space: pre-line;
+      animation: galina-fadeIn 0.3s ease;
+    }
+    @keyframes galina-fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .galina-msg.galina-bot {
+      background: #ffffff;
+      color: #2d2820;
+      align-self: flex-start;
+      border: 1px solid #e8e4de;
+      border-bottom-left-radius: 4px;
+    }
+    .galina-msg.galina-user {
+      background: #1a3a2a;
+      color: #ffffff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .galina-typing {
+      align-self: flex-start;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      background: #ffffff;
+      border-radius: 14px;
+      border: 1px solid #e8e4de;
+      border-bottom-left-radius: 4px;
+      font-size: 13px;
+      color: #8a8078;
+      animation: galina-fadeIn 0.3s ease;
+    }
+    .galina-typing-dots {
+      display: flex;
+      gap: 3px;
+    }
+    .galina-typing-dots span {
+      width: 6px;
+      height: 6px;
+      background: #8a8078;
+      border-radius: 50%;
+      animation: galina-bounce 1.4s infinite;
+    }
+    .galina-typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .galina-typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes galina-bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
+    .galina-quick-replies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      animation: galina-fadeIn 0.3s ease;
+    }
+    .galina-quick-btn {
+      background: #f0ebe6;
+      border: 1px solid #ddd5cb;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      color: #1a3a2a;
+      cursor: pointer;
+      font-family: var(--font-body), system-ui, sans-serif;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .galina-quick-btn:hover {
+      background: #c8a45c;
+      border-color: #c8a45c;
+      color: #1a3a2a;
+    }
+
+    .galina-input-area {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-top: 1px solid #e8e4de;
+      flex-shrink: 0;
+    }
+    .galina-input-area textarea {
+      flex: 1;
+      border: 1px solid #ddd5cb;
+      border-radius: 22px;
+      padding: 9px 16px;
+      font-size: 13.5px;
+      font-family: var(--font-body), system-ui, sans-serif;
+      resize: none;
+      outline: none;
+      max-height: 80px;
+      overflow-y: auto;
+      line-height: 1.4;
+      color: #2d2820;
+      background: #f7f6f3;
+      transition: border-color 0.15s ease;
+    }
+    .galina-input-area textarea:focus {
+      border-color: #1a3a2a;
+    }
+    .galina-input-area textarea::placeholder {
+      color: #8a8078;
+    }
+    .galina-send-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1a3a2a;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+    .galina-send-btn:hover {
+      background: #2a5a3a;
+    }
+    .galina-send-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #ffffff;
+    }
+
+    @media (max-width: 500px) {
+      #galina-window {
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+      }
+      #galina-toggle {
+        bottom: 16px;
+        right: 16px;
+      }
+    }
     @media (max-width: 700px) {
-      #chat-widget { bottom: calc(var(--space-6) + 68px); }
+      #galina-toggle { bottom: calc(24px + 68px); }
     }
   </style>
 </head>
@@ -2085,8 +2357,31 @@
     <a href="#contact" class="btn btn--primary">Devis Gratuit en 48h</a>
   </div>
 
-  <!-- CloudStation Chatbot Widget -->
-  <script src="https://cloud-station.io/widgets/chat.js" data-widget-id="europanthere-sales" async></script>
+  <!-- Galina Chatbot Assistant -->
+  <button id="galina-toggle" aria-label="Ouvrir le chat avec Galina">
+    <span class="galina-avatar-btn">👩‍💼</span>
+    <span class="galina-close-icon">✕</span>
+  </button>
+
+  <div id="galina-window" role="dialog" aria-label="Chat avec Galina">
+    <div class="galina-header">
+      <div class="galina-header-avatar">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      </div>
+      <div class="galina-header-info">
+        <div class="galina-header-name">Galina</div>
+        <div class="galina-header-status"><span class="galina-status-dot"></span> En ligne</div>
+      </div>
+      <button class="galina-header-close" id="galina-close-btn" aria-label="Fermer le chat">✕</button>
+    </div>
+    <div class="galina-messages" id="galina-messages"></div>
+    <div class="galina-input-area">
+      <textarea id="galina-input" rows="1" placeholder="Écrivez votre message..." aria-label="Votre message"></textarea>
+      <button class="galina-send-btn" id="galina-send" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
 
   <!-- ============================================================
        VANILLA JAVASCRIPT
@@ -2243,6 +2538,165 @@
           mobileCta.style.display = 'none';
         }
       }, { passive: true });
+
+      /* --- Galina Chatbot --- */
+      (function() {
+        var toggle = document.getElementById('galina-toggle');
+        var win = document.getElementById('galina-window');
+        var closeBtn = document.getElementById('galina-close-btn');
+        var messagesEl = document.getElementById('galina-messages');
+        var inputEl = document.getElementById('galina-input');
+        var sendBtn = document.getElementById('galina-send');
+        var isOpen = false;
+        var welcomed = false;
+
+        var responses = [
+          { keys: ['bonjour','salut','hello','bonsoir','coucou','hey','hi'], text: "Bonjour ! \ud83d\udc4b Je suis Galina, votre assistante commerciale chez Europanth\u00e8re R\u00e9novation. Comment puis-je vous aider aujourd\u2019hui ?" },
+          { keys: ['services','travaux','quoi','proposez','faites','activit'], text: "Nous proposons une gamme compl\u00e8te de services :\n\n\ud83c\udfd7\ufe0f R\u00e9novation int\u00e9rieure et ext\u00e9rieure\n\ud83c\udfe0 Construction neuve\n\ud83d\udd27 Travaux tout corps d\u2019\u00e9tats\n\ud83c\udfa8 Peinture et d\u00e9coration\n\ud83d\udebf Plomberie et \u00e9lectricit\u00e9\n\ud83e\ude9f Menuiserie et isolation\n\nQuel type de travaux vous int\u00e9resse ?" },
+          { keys: ['devis','prix','co\u00fbt','tarif','combien','estimation','budget'], text: "Pour obtenir un devis gratuit et personnalis\u00e9, vous pouvez :\n\n\ud83d\udce7 Nous \u00e9crire : contact@pannthere.site\n\ud83d\udcde Nous appeler : 06 22 80 75 40 ou 07 79 80 59 67\n\nNous nous d\u00e9pla\u00e7ons gratuitement pour \u00e9valuer vos travaux !" },
+          { keys: ['contact','appeler','t\u00e9l\u00e9phone','email','joindre','num\u00e9ro','adresse','coordonn'], text: "Vous pouvez nous joindre par :\n\n\ud83d\udcde 06 22 80 75 40\n\ud83d\udcde 07 79 80 59 67\n\ud83d\udce7 contact@pannthere.site\n\ud83d\udccd Vincennes, \u00cele-de-France\n\nNous sommes disponibles du lundi au samedi, de 8h \u00e0 19h !" },
+          { keys: ['o\u00f9','zone','secteur','ville','r\u00e9gion','paris','vincennes','\u00eele-de-france','intervention','idf'], text: "Nous intervenons dans toute l\u2019\u00cele-de-France :\n\n\ud83d\udccd Paris et petite couronne\n\ud83d\udccd Grande couronne\n\ud83d\udccd Val-de-Marne, Seine-Saint-Denis, Hauts-de-Seine\n\ud83d\udccd Essonne, Yvelines, Val-d\u2019Oise, Seine-et-Marne\n\nO\u00f9 se situe votre projet ?" },
+          { keys: ['r\u00e9novation','r\u00e9nover','appartement','maison','salle de bain','cuisine','chambre'], text: "La r\u00e9novation est notre sp\u00e9cialit\u00e9 ! \ud83c\udfe0 Nous r\u00e9alisons :\n\n\u2022 R\u00e9novation compl\u00e8te d\u2019appartements et maisons\n\u2022 R\u00e9novation de salles de bain et cuisines\n\u2022 Remise aux normes \u00e9lectriques et plomberie\n\u2022 Isolation thermique et phonique\n\nDites-moi en plus sur votre projet !" },
+          { keys: ['garantie','assurance','qualit\u00e9','certifi\u00e9','fiable','confiance'], text: "Votre tranquillit\u00e9 est notre priorit\u00e9 :\n\n\u2705 Garantie d\u00e9cennale sur tous nos travaux\n\u2705 Assurance responsabilit\u00e9 civile professionnelle\n\u2705 Devis d\u00e9taill\u00e9 et transparent\n\u2705 Suivi de chantier personnalis\u00e9\n\u2705 Respect des d\u00e9lais convenus\n\nVous \u00eates entre de bonnes mains !" },
+          { keys: ['aide','financement','subvention','maprimerénov','cr\u00e9dit','pr\u00eat','prime'], text: "Bonne nouvelle ! Des aides financi\u00e8res existent pour vos travaux :\n\n\ud83d\udcb0 MaPrimeR\u00e9nov\u2019\n\ud83d\udcb0 \u00c9co-pr\u00eat \u00e0 taux z\u00e9ro\n\ud83d\udcb0 TVA r\u00e9duite \u00e0 5.5% ou 10%\n\ud83d\udcb0 Aides de l\u2019ANAH\n\ud83d\udcb0 CEE (Certificats d\u2019\u00e9conomie d\u2019\u00e9nergie)\n\nNous vous accompagnons dans vos d\u00e9marches !" },
+          { keys: ['merci','super','parfait','g\u00e9nial','excellent','top','formidable'], text: "Avec plaisir ! \ud83d\ude0a N\u2019h\u00e9sitez pas si vous avez d\u2019autres questions. Nous sommes l\u00e0 pour vous accompagner dans votre projet de r\u00e9novation !" },
+          { keys: ['au revoir','bye','bonne journ\u00e9e','\u00e0 bient\u00f4t','ciao','bonsoir'], text: "Au revoir et \u00e0 bient\u00f4t ! \ud83d\udc4b N\u2019h\u00e9sitez pas \u00e0 revenir si vous avez des questions. Bonne journ\u00e9e !" }
+        ];
+
+        var defaultResponse = "Je ne suis pas s\u00fbre de comprendre votre demande. Voici ce que je peux faire pour vous :\n\n1\ufe0f\u20e3 Vous pr\u00e9senter nos services\n2\ufe0f\u20e3 Vous donner nos coordonn\u00e9es\n3\ufe0f\u20e3 Vous aider \u00e0 obtenir un devis gratuit\n4\ufe0f\u20e3 Vous informer sur les aides financi\u00e8res\n\nQue souhaitez-vous savoir ?";
+
+        function addMessage(text, sender) {
+          var msg = document.createElement('div');
+          msg.className = 'galina-msg ' + sender;
+          msg.textContent = text;
+          messagesEl.appendChild(msg);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function showTyping() {
+          var typing = document.createElement('div');
+          typing.className = 'galina-typing';
+          typing.id = 'galina-typing';
+          typing.innerHTML = 'Galina \u00e9crit<div class="galina-typing-dots"><span></span><span></span><span></span></div>';
+          messagesEl.appendChild(typing);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function hideTyping() {
+          var typing = document.getElementById('galina-typing');
+          if (typing) typing.remove();
+        }
+
+        function addQuickReplies() {
+          var container = document.createElement('div');
+          container.className = 'galina-quick-replies';
+          container.id = 'galina-quick-replies';
+          var buttons = ['Nos services', 'Demander un devis', 'Nous contacter'];
+          buttons.forEach(function(label) {
+            var btn = document.createElement('button');
+            btn.className = 'galina-quick-btn';
+            btn.textContent = label;
+            btn.addEventListener('click', function() {
+              var qr = document.getElementById('galina-quick-replies');
+              if (qr) qr.remove();
+              handleUserMessage(label);
+            });
+            container.appendChild(btn);
+          });
+          messagesEl.appendChild(container);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
+        function findResponse(input) {
+          var lower = input.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          for (var i = 0; i < responses.length; i++) {
+            for (var j = 0; j < responses[i].keys.length; j++) {
+              var key = responses[i].keys[j].normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+              if (lower.indexOf(key) !== -1) {
+                return responses[i].text;
+              }
+            }
+          }
+          return defaultResponse;
+        }
+
+        function handleUserMessage(text) {
+          if (!text.trim()) return;
+          addMessage(text, 'galina-user');
+          inputEl.value = '';
+          inputEl.style.height = 'auto';
+          showTyping();
+          var delay = 800 + Math.random() * 700;
+          setTimeout(function() {
+            hideTyping();
+            addMessage(findResponse(text), 'galina-bot');
+          }, delay);
+        }
+
+        function openChat() {
+          isOpen = true;
+          toggle.classList.add('galina-open');
+          win.classList.add('galina-visible');
+          requestAnimationFrame(function() {
+            requestAnimationFrame(function() {
+              win.classList.add('galina-shown');
+            });
+          });
+          if (!welcomed) {
+            welcomed = true;
+            showTyping();
+            setTimeout(function() {
+              hideTyping();
+              addMessage("Bonjour ! \ud83d\udc4b Je suis Galina, votre assistante commerciale chez Europanth\u00e8re R\u00e9novation. Comment puis-je vous aider aujourd\u2019hui ?", 'galina-bot');
+              addQuickReplies();
+            }, 1000);
+          }
+          inputEl.focus();
+          try { sessionStorage.setItem('galina-open', '1'); } catch(e) {}
+        }
+
+        function closeChat() {
+          isOpen = false;
+          toggle.classList.remove('galina-open');
+          win.classList.remove('galina-shown');
+          setTimeout(function() {
+            win.classList.remove('galina-visible');
+          }, 300);
+          try { sessionStorage.setItem('galina-open', '0'); } catch(e) {}
+        }
+
+        toggle.addEventListener('click', function() {
+          if (isOpen) { closeChat(); } else { openChat(); }
+        });
+
+        closeBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeChat();
+        });
+
+        sendBtn.addEventListener('click', function() {
+          handleUserMessage(inputEl.value);
+        });
+
+        inputEl.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleUserMessage(inputEl.value);
+          }
+        });
+
+        inputEl.addEventListener('input', function() {
+          this.style.height = 'auto';
+          this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+        });
+
+        /* Restore state from sessionStorage */
+        try {
+          if (sessionStorage.getItem('galina-open') === '1') {
+            openChat();
+          }
+        } catch(e) {}
+      })();
 
     })();
   </script>
