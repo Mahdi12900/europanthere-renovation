@@ -4,7 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Europanthère Rénovation · Rénovation & Construction en Île-de-France</title>
-  <meta name="description" content="Europanthère Rénovation, votre expert en rénovation et construction tout corps d'états en Île-de-France. Devis gratuit en 48h.">
+  <meta name="description" content="Europanthère Rénovation - Expert en rénovation et construction en Île-de-France. Travaux tout corps d'états, rénovation intérieure et extérieure, construction neuve. Devis gratuit.">
+  <meta name="keywords" content="rénovation, construction, Île-de-France, travaux, Vincennes, rénovation intérieure, rénovation extérieure, construction neuve, devis gratuit, tout corps d'état">
+  <link rel="canonical" href="https://www.pannthere.site/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Europanthère Rénovation · Rénovation & Construction en Île-de-France">
+  <meta property="og:description" content="Expert en rénovation et construction tout corps d'états en Île-de-France. Devis gratuit.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.pannthere.site/">
+  <meta property="og:image" content="https://www.pannthere.site/og-image.jpg">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Europanthère Rénovation · Rénovation & Construction en Île-de-France">
+  <meta name="twitter:description" content="Expert en rénovation et construction tout corps d'états en Île-de-France. Devis gratuit.">
+  <meta name="twitter:image" content="https://www.pannthere.site/og-image.jpg">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Europanthère Rénovation",
+    "url": "https://www.pannthere.site",
+    "telephone": ["0622807540", "0779805967"],
+    "email": "contact@pannthere.site",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "32 Rue Céline Robert",
+      "addressLocality": "Vincennes",
+      "postalCode": "94300",
+      "addressRegion": "Île-de-France",
+      "addressCountry": "FR"
+    },
+    "areaServed": "Île-de-France",
+    "description": "Expert en rénovation et construction tout corps d'états en Île-de-France",
+    "openingHours": ["Mo-Fr 08:00-18:00", "Sa 09:00-13:00"]
+  }
+  </script>
 
   <!-- Fonts: Archivo (display) + Figtree (body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -249,8 +288,38 @@
       transition: color var(--dur-fast), background var(--dur-fast);
     }
     .nav-link:hover { color: var(--ink); background: #e8ddd2; }
+    .nav-contact-info {
+      display: flex;
+      align-items: center;
+      margin-left: var(--space-4);
+    }
+    .nav-phone {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      white-space: nowrap;
+      transition: color var(--dur-fast) var(--ease-out-quart);
+    }
+    .nav-phone:hover { color: var(--accent-hover); }
+    .nav-phone svg { flex-shrink: 0; }
     .nav-cta {
       margin-left: var(--space-3);
+    }
+    .mobile-menu-contact {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--border);
+    }
+    .mobile-menu-contact a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--accent);
     }
     .mobile-toggle {
       display: none;
@@ -296,6 +365,7 @@
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-cta-desktop { display: none; }
+      .nav-contact-info { display: none; }
       .mobile-toggle { display: flex; }
     }
 
@@ -1207,6 +1277,12 @@
         <a href="#temoignages" class="nav-link">Avis</a>
         <a href="#contact" class="nav-link">Contact</a>
       </nav>
+      <div class="nav-contact-info">
+        <a href="tel:+33622807540" class="nav-phone" aria-label="Appeler">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          06 22 80 75 40
+        </a>
+      </div>
       <a href="#contact" class="btn btn--primary nav-cta nav-cta-desktop">Devis Gratuit</a>
       <button class="mobile-toggle" id="mobile-toggle" aria-label="Ouvrir le menu">
         <span></span><span></span><span></span>
@@ -1224,6 +1300,11 @@
     <a href="#temoignages" class="mobile-nav-link">Avis</a>
     <a href="#contact" class="mobile-nav-link">Contact</a>
     <a href="#contact" class="btn btn--primary btn--large mobile-nav-link">Devis Gratuit</a>
+    <div class="mobile-menu-contact">
+      <a href="tel:+33622807540">📞 06 22 80 75 40</a>
+      <a href="tel:+33779805967">📞 07 79 80 59 67</a>
+      <a href="mailto:contact@pannthere.site">✉ contact@pannthere.site</a>
+    </div>
   </div>
 
   <main>
@@ -1907,11 +1988,12 @@
               </div>
               <div class="contact-block">
                 <h3>Téléphone</h3>
-                <p><a href="tel:+331XXXXXXXX">01 XX XX XX XX</a></p>
+                <p><a href="tel:+33622807540">06 22 80 75 40</a></p>
+                <p><a href="tel:+33779805967">07 79 80 59 67</a></p>
               </div>
               <div class="contact-block">
                 <h3>Email</h3>
-                <p><a href="mailto:contact@europanthererenovation.com">contact@europanthererenovation.com</a></p>
+                <p><a href="mailto:contact@pannthere.site">contact@pannthere.site</a></p>
               </div>
               <div class="contact-block">
                 <h3>Horaires</h3>
@@ -1966,12 +2048,14 @@
           </div>
         </div>
         <div>
-          <h4>Informations</h4>
+          <h4>Contact</h4>
           <div class="footer-links">
+            <a href="tel:+33622807540">📞 06 22 80 75 40</a>
+            <a href="tel:+33779805967">📞 07 79 80 59 67</a>
+            <a href="mailto:contact@pannthere.site">✉ contact@pannthere.site</a>
             <a href="#methode">Notre méthode</a>
             <a href="#garanties">Nos garanties</a>
             <a href="#temoignages">Avis clients</a>
-            <a href="#contact">Contact</a>
             <a href="#">Mentions légales</a>
           </div>
         </div>
@@ -2001,12 +2085,8 @@
     <a href="#contact" class="btn btn--primary">Devis Gratuit en 48h</a>
   </div>
 
-  <!-- Chat widget -->
-  <div id="chat-widget" aria-label="Ouvrir le chat" role="button" tabindex="0">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-    </svg>
-  </div>
+  <!-- CloudStation Chatbot Widget -->
+  <script src="https://cloud-station.io/widgets/chat.js" data-widget-id="europanthere-sales" async></script>
 
   <!-- ============================================================
        VANILLA JAVASCRIPT
